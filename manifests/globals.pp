@@ -61,6 +61,7 @@
 #
 # @param needs_initdb Explicitly calls the initdb operation after the server package is installed and before the PostgreSQL service is started.
 #
+# @param apt_source_release Overrides the default release for the apt source.
 # @param encoding
 #   Sets the default encoding for all databases created with this module.
 #   On certain operating systems, this is also used during the template1 initialization, so it becomes a default outside of the module as well.
@@ -143,6 +144,7 @@ class postgresql::globals (
   Optional[String[1]] $version                     = undef,
   Optional[String[1]] $postgis_version             = undef,
   Optional[String[1]] $repo_proxy                  = undef,
+  Optional[String[1]] $apt_source_release          = undef,
   Optional[String[1]] $repo_baseurl                = undef,
   Optional[String[1]] $yum_repo_commonurl          = undef,
 
@@ -266,6 +268,7 @@ class postgresql::globals (
     class { 'postgresql::repo':
       version   => $globals_version,
       proxy     => $repo_proxy,
+      release   => $apt_source_release,
       baseurl   => $repo_baseurl,
       commonurl => $yum_repo_commonurl,
     }
